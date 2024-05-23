@@ -82,7 +82,7 @@ export class HomepageComponent implements OnInit{
       let url: string = `https://api.spotify.com/v1/artists/${id}/top-tracks`;
   
       this.http.get(url,  headers ).subscribe((res: any) => {
-        this.ApiSongs = this.ApiSongs.concat(res.tracks); // Предполагается, что вы хотите добавить треки к ApiSongs
+        this.ApiSongs = this.ApiSongs.concat(res.tracks);  
         
       });
     });
