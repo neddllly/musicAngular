@@ -25,6 +25,7 @@ export class HttpService {
   return this.api
  }
  getServerUrl(){
+  return ""
   return this.api+"/web/"  
  }
   get(url){
