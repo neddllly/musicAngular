@@ -28,8 +28,8 @@ export class HttpService {
   return ""
   return this.api+"/web/"  
  }
-  get(url){
-    let headers = new HttpHeaders();
+  get(url, head={}){
+    let headers = new HttpHeaders(head);
     let options = { headers: headers, withCredentials: true }
     return this.http.get(this.getServerUrl()+url, options).pipe(
       catchError((err) => {
