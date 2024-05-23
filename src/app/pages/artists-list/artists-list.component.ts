@@ -24,18 +24,19 @@ export class ArtistsListComponent implements OnInit{
   }
   getToken() {
     let headers = {
-       
       "Content-Type" : "application/x-www-form-urlencoded",
       "Authorization": "Basic" +  btoa(this.clientId + ":" + this.clientSecret) ,
-      
     };
-     let body : "grant_type=client_credentials";
+
+    let body ={
+      grant_type : "client_credentials"
+    };
     let url: string = 'https://accounts.spotify.com/api/token';
-    this.http.post(url,headers, body).subscribe((res: any) => {
-       
+    this.http.post(url, body, headers).subscribe((res: any) => {
       this.data=res.access_token ;
 
     });
+    console.log(this.data)
   }
 
 }

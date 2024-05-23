@@ -36,10 +36,10 @@ export class HttpService {
       })
     )
   }
-  post(url, body){
-    let headers = new HttpHeaders();
-    let options = { headers: headers, withCredentials: true }
-    return this.http.post(this.getServerUrl()+url, body, options).pipe(
+  post(url, body, head={}){
+    let headers = new HttpHeaders(head);
+    let options = { headers: headers, withCredentials: true}
+    return this.http.post(this.getServerUrl()+url, body, options ).pipe(
       catchError((err) => {
         return throwError(err);  
       })
