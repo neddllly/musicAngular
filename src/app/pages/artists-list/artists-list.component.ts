@@ -20,18 +20,18 @@ export class ArtistsListComponent implements OnInit{
         clientId:"b5c5d742ae834601a4a6b336ca7c016a" ;
       clientSecret: "ad5bd0b0d49b47b3a027d4abde18d9bf";
   ngOnInit(): void {
-    this.getToken();
+
   }
   getToken() {
     let headers = {
        
       "Content-Type" : "application/x-www-form-urlencoded",
       "Authorization": "Basic" +  btoa(this.clientId + ":" + this.clientSecret) ,
-      "body" : "grant_type=client_credentials"
+      
     };
-   
+     let body : "grant_type=client_credentials";
     let url: string = 'https://accounts.spotify.com/api/token';
-    this.http.post(url,headers).subscribe((res: any) => {
+    this.http.post(url,headers, body).subscribe((res: any) => {
        
       this.data=res.access_token ;
 
