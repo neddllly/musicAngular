@@ -41,20 +41,18 @@
     </div>
   </div>
   <div class="row d-flex justify-content-center my-2">
-    <div *ngFor="let artist of artists.slice(0, 10)"
+    <div *ngFor="let artist of ApiArtists"
       class="card card-tom m-3 col-12 col-xl-12 col"
       style="width: 200px"
     >
       <img
         class="card-img-top"
         style="height: 200px; width: 200px"
-        [src]="artist.image[0]?.text"
-
-        alt="Card image cap"
+        [src]="artist.images[0].url"
       />
       <div class="card-body">
         <p class="card-text"><b> {{artist.name}}</b></p>
-        <p class="card-text">Пісні: {{artist.listeners}}</p>
+        <p class="card-text">Toп  {{artist.popularity}}</p>
       </div>
     </div>
   </div>
