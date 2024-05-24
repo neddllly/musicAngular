@@ -1,63 +1,110 @@
 <div class="header-box">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col d-flex align-items-center justify-content-between">
-          <p class="kanit-extrabold">mussic</p>
-          <a href="/artists"><p>Виконавці</p></a>
-          <p>Пісні</p>
-          <p>Жанри</p>
-          <p>Моя Бібліотека</p>
-          <div class="input-search input-search-navbar mx-2">
-            <input
-              placeholder="Пошук"
-              type="text"
-            />
-            <button type="submit" class="searchButton">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
-          <div class="btn-login  my-2">Увійти</div>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col d-flex align-items-center justify-content-between">
+        <p class="kanit-extrabold">mussic</p>
+        <a href="/artists"><p>Виконавці</p></a>
+        <p>Пісні</p>
+        <p>Жанри</p>
+        <p>Моя Бібліотека</p>
+        <div class="input-search input-search-navbar mx-2">
+          <input placeholder="Пошук" type="text" />
+          <button type="submit" class="searchButton">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </div>
+        <div class="btn-login my-2">Увійти</div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="footer-box">
-    <div class="container">
-      <div
-        class="row d-flex justify-content-center text-center py-4 align-items-start"
-      >
-        <div class="col d-flex justify-content-center flex-column">
-          <h5><b>КОМПАНІЯ</b></h5>
-          <p>Про нас</p>
-          <p>Вакансії</p>
+<div class="artist-info my-4">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col d-flex">
+        <div class="banner-image me-3">
+          <img  class="song-img" style="height: 350px" [src]="ApiArtists.images[0].url" alt="" />
         </div>
-        <div class="col d-flex justify-content-center flex-column">
-          <h5><b>СПІЛЬНОТИ</b></h5>
-          <p>Для виконавців</p>
-          <p>Для розробників</p>
-          <p>Для рекламодавців</p>
-          <p>Для інвесторів</p>
-          <p>Для постачальників</p>
-        </div>
-        <div class="col d-flex justify-content-center flex-column">
-          <h5><b>КОРИСНІ ПОСИЛАННЯ</b></h5>
-          <p>Підтримка</p>
-          <p>Вебпрогравач</p>
-        </div>
-      </div>
-      <div
-        class="row d-flex justify-content-between text-center my-4 py-4 align-items-start"
-      >
-        <div class="col d-flex text-center justify-content-center flex-row">
-          <p>Юридична інформація</p>
-        </div>
-        <div class="col d-flex text-center justify-content-center flex-row">
-          <p>Центр конфіденційності</p>
-        </div>
-        <div class="col d-flex text-center justify-content-center flex-row">
-          <p>Політика конфіденційності</p>
+        <div class="col flex-column d-flex justify-content-start">
+          <div class="col">
+            <p>Підтверджений виконавець</p>
+            <div class="artist-name align-items-center">
+              <p>{{ ApiArtists.name }}</p>
+            </div>
+            <p>{{ ApiArtists.followers.total }} підписників</p>
+          </div>
+          <div class="tags">
+            <p *ngFor="let genre of ApiArtists.genres"># {{ genre }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="artist-songs my-4">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="my-4">
+          <p style="font-weight: 800; font-size: 40px">Популярні треки</p>
+        </div>
+
+        <div *ngFor="let song of ApiSongs" class="col-12 song-item d-flex align-items-center p-2">
+          <i class="fa-solid fa-play mx-4" (click)="getOneSong(song.id)"></i>
+          <img class="song-img" style="height: 60px" [src]="song.album.images[0].url" alt="" />
+          <div class="ms-2 flex-grow-1">
+            <b><p class="mb-0" *ngIf=" song.preview_url " >{{song.name}}</p></b>
+          </div>
+          <div class="ms-4 ">
+            <p class="mb-0">{{song.album.name}}</p> 
+           </div> <div class="ms-4  ">
+            <p class="mb-0">{{ song.album.release_date | date: 'dd.MM.yyyy' }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-box">
+  <div class="container">
+    <div
+      class="row d-flex justify-content-center text-center py-4 align-items-start"
+    >
+      <div class="col d-flex justify-content-center flex-column">
+        <h5><b>КОМПАНІЯ</b></h5>
+        <p>Про нас</p>
+        <p>Вакансії</p>
+      </div>
+      <div class="col d-flex justify-content-center flex-column">
+        <h5><b>СПІЛЬНОТИ</b></h5>
+        <p>Для виконавців</p>
+        <p>Для розробників</p>
+        <p>Для рекламодавців</p>
+        <p>Для інвесторів</p>
+        <p>Для постачальників</p>
+      </div>
+      <div class="col d-flex justify-content-center flex-column">
+        <h5><b>КОРИСНІ ПОСИЛАННЯ</b></h5>
+        <p>Підтримка</p>
+        <p>Вебпрогравач</p>
+      </div>
+    </div>
+    <div
+      class="row d-flex justify-content-between text-center my-4 py-4 align-items-start"
+    >
+      <div class="col d-flex text-center justify-content-center flex-row">
+        <p>Юридична інформація</p>
+      </div>
+      <div class="col d-flex text-center justify-content-center flex-row">
+        <p>Центр конфіденційності</p>
+      </div>
+      <div class="col d-flex text-center justify-content-center flex-row">
+        <p>Політика конфіденційності</p>
+      </div>
+    </div>
+  </div>
+</div>

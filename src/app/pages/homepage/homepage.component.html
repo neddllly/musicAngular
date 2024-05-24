@@ -78,20 +78,24 @@
           <img
             class="card-img-top"
             style="height: 200px; width: 200px"
-            [src]="artist.images[0].url"
+            [src]="artist.songs[0].album.images[0].url"
 
             alt="Card image cap"
           />
-          <div class="card-body">
-            <p class="card-text"><b> {{artist.name}}</b></p>
-            
-          </div>
-          <div *ngFor="let song of artist.songs"  class="card-body">
-            <p class="card-text"><b> {{song.name}}</b> <i class="fa-solid fa-play"></i></p>
-             
-          </div>
+
+          <div   class="card-body">
+            <p class="card-text"><b> {{artist.songs[0].name}}</b></p>
+            <p class="card-text">{{artist.name}}</p>
+          </div>         
+ 
+           
+ 
         </div>
       </div>
+      <div *ngFor="let artist of ApiArtists">
+        <audio controls [src]="artist.songs[0]?.preview_url || artist.songs[1]?.preview_url || artist.songs[2]?.preview_url"></audio>
+      </div>
+            
     </div>
     <div class="container">
       <div class="row d-flex justify-content-center my-2">

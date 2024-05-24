@@ -3,6 +3,7 @@ import { Genres, Songs } from '../../const/core.ts/songs';
 import { NgFor } from '@angular/common';
 import { HttpService } from '../../utils/http.service';
  
+ 
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -74,6 +75,7 @@ export class HomepageComponent implements OnInit{
       this.http.get(url,  headers ).subscribe((res: any) => {
         artist.songs =  res.tracks;  
         this.cdr.detectChanges()
+        console.log(artist.songs)
       });
   
   }

@@ -2,16 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Artists } from '../../const/core.ts/songs';
 import { NgFor } from '@angular/common';
 import { HttpService } from '../../utils/http.service';
+import { RouterModule } from '@angular/router';
+ 
+ 
 
 @Component({
   selector: 'app-artists-list',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, RouterModule],
   templateUrl: './artists-list.component.html',
   styleUrl: './artists-list.component.less',
 })
 export class ArtistsListComponent implements OnInit {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService
+    ) {}
   artists = Artists;
   ApiArtists: Array<any> = [];
   token = '';

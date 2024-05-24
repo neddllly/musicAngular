@@ -51,7 +51,7 @@
         [src]="artist.images[0].url"
       />
       <div class="card-body">
-        <p class="card-text"><b> {{artist.name}}</b></p>
+       <a [routerLink]="'/artist/'+artist.id" ><p class="card-text"><b> {{artist.name}}</b></p></a> 
         <p class="card-text">Toп  {{artist.popularity}}</p>
       </div>
     </div>
