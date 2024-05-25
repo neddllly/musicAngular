@@ -1,25 +1,21 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Genres, Songs } from '../../const/core.ts/songs';
-import { NgFor } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpService } from '../../utils/http.service';
- 
- 
+import { RouterModule } from '@angular/router';
+import { NgFor } from '@angular/common';
+import { forkJoin } from 'rxjs';
+
 @Component({
-  selector: 'app-homepage',
+  selector: 'app-songs-list',
   standalone: true,
-  imports: [NgFor],
-  templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.less',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [NgFor, RouterModule],
+  templateUrl: './songs-list.component.html',
+  styleUrl: './songs-list.component.less'
 })
-export class HomepageComponent implements OnInit{    
+export class SongsListComponent implements OnInit{    
   constructor(private http: HttpService, private cdr: ChangeDetectorRef
  
     ){}
-  songs=Songs;
-  genres=Genres;
-  ApiGenres: Array<any> = [];
-  randomGenres: any[] = [];
+
   ApiArtists: Array<any> = [];
   ApiSongs: Array<any> = [];
   token = '';
@@ -27,6 +23,8 @@ export class HomepageComponent implements OnInit{
   clientSecret = 'ad5bd0b0d49b47b3a027d4abde18d9bf';
   ngOnInit(): void {
     this.getToken();
+
+   
 
   }
   getToken() {
@@ -42,7 +40,7 @@ export class HomepageComponent implements OnInit{
       this.token = res.access_token;
      
       this.getArtists();
-      this.getGenres();
+      
       
     });
   }
@@ -56,14 +54,29 @@ export class HomepageComponent implements OnInit{
     this.http.get(url, headers).subscribe((res: any) => {
 
       this.ApiArtists = res.artists;
-      console.log(this.ApiArtists);
-      this.ApiArtists.forEach((artist: any)=>{
-        this.getSongs(artist);
-      })
+
+      this.getArtistsTwo();
       
     });
   }
   
+  getArtistsTwo() {
+    let headers = {
+      Authorization : "Bearer " + this.token,
+    };
+
+    let url: string = 'https://api.spotify.com/v1/artists?ids=73sIBHcqh3Z3NyqHKZ7FOL%2C6vWDO969PvNqNYHIOW5v0m%2C5cj0lLjcoR7YOSnhnX0Po5%2C1McMsnEElThX1knmY4oliG%2C2uYWxilOVlUdk4oV9DvwqK';
+    this.http.get(url, headers).subscribe((res: any) => {
+
+      for (let i = 0; i < res.artists.length; i++) {
+        this.ApiArtists.push(res.artists[i]);
+    }
+
+    this.ApiArtists.forEach((artist: any)=>{
+      this.getSongs(artist);
+    })
+    });
+   }
 
   getSongs(artist) {
   
@@ -75,27 +88,11 @@ export class HomepageComponent implements OnInit{
       this.http.get(url,  headers ).subscribe((res: any) => {
         artist.songs =  res.tracks;  
         this.cdr.detectChanges()
-        console.log(artist.songs)
+         this.ApiSongs.push(artist.songs) 
+       
       });
   
   }
   
-  getGenres() {
-    let headers = {
-      Authorization : "Bearer " + this.token,
-    };
-    let url: string = 'https://api.spotify.com/v1/recommendations/available-genre-seeds';
-    this.http.get(url, headers).subscribe((res: any) => {
-      this.ApiGenres = res.genres;
-      this.cdr.detectChanges()
-      console.log( this.ApiGenres)
-      this.randomGenres = this.getRandomGenres(8); this.cdr.detectChanges()
-    });
-
-  }
-  getRandomGenres(count: number): any[] {
-    return this.ApiGenres
-      .sort(() => Math.random() - 0.5) // Перемешивание массива
-      .slice(0, count); // Выбор первых 'count' элементов
-  }
+  
 }

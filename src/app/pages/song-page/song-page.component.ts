@@ -1,20 +1,27 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { HttpService } from '../../utils/http.service';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Lyrics } from '../../const/core.ts/songs';
+import { NgFor, NgIf } from '@angular/common';
+ 
+
 @Component({
-  selector: 'app-artist-page',
+  selector: 'app-song-page',
   standalone: true,
-  imports: [RouterModule, NgFor, DatePipe, NgIf],
-  templateUrl: './artist-page.component.html',
-  styleUrl: './artist-page.component.less',
+  imports: [NgFor, NgIf],
+  templateUrl: './song-page.component.html',
+  styleUrl: './song-page.component.less'
 })
-export class ArtistPageComponent implements OnInit {
+export class SongPageComponent implements OnInit {
+  private geniusClient;
   constructor(
     private http: HttpService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    
+  ) {
+   }
+lyrics = Lyrics
   id: number;
   token = '';
   clientId = 'b5c5d742ae834601a4a6b336ca7c016a';
@@ -22,6 +29,7 @@ export class ArtistPageComponent implements OnInit {
   ApiArtists: any = {};
   ApiSongs: Array<any> = [];
   ApiOneSong: any  
+   songslyr : Array<any> = [];
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
@@ -41,36 +49,24 @@ export class ArtistPageComponent implements OnInit {
     let url: string = 'https://accounts.spotify.com/api/token';
     this.http.post(url, body, headers).subscribe((res: any) => {
       this.token = res.access_token;
-      this.getArtists();
-    });
-  }
-
-  getArtists() {
-    let headers = {
-      Authorization: 'Bearer ' + this.token,
-    };
-
-    let url: string = `https://api.spotify.com/v1/artists/${this.id}`;
-    this.http.get(url, headers).subscribe((res: any) => {
-      this.ApiArtists = res;
-     
-      console.log(this.ApiArtists);
-      this.getSongs();
-      this.cdr.detectChanges();
+      this.getSongs() 
     });
   }
 
   getSongs() {
+    console.log(this.id);
     let headers = {
       Authorization: 'Bearer ' + this.token,
     };
-    let url: string = `https://api.spotify.com/v1/artists/${this.id}/top-tracks`;
+    let url: string = `https://api.spotify.com/v1/tracks/${this.id}`;
 
     this.http.get(url, headers).subscribe((res: any) => {
-      this.ApiSongs = res.tracks;
+      this.ApiOneSong = res;
       this.cdr.detectChanges();
-      console.log(this.ApiSongs);
+      console.log(this.ApiOneSong);
+       
     });
   }
+
  
 }

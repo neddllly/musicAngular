@@ -1,0 +1,115 @@
+<div class="header-box">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col d-flex align-items-center justify-content-between">
+         <a href="/">  <img style="height: 45px;" src="../../../assets/images/Group 57.png" alt="" /></a> 
+          <a href="/artists"><p>Виконавці</p></a>
+          <a href="/songs"><p>Пісні</p></a>
+          <div class="input-search input-search-navbar mx-2">
+            <input
+              placeholder="Пошук"
+              type="text"
+            />
+            <button type="submit" class="searchButton">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+          <div class="btn-login  my-2">Увійти</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="artist-info my-4">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col d-flex">
+          <div class="banner-image me-3">
+            <img class="song-img" style="height: 350px" alt="" [src]="ApiOneSong.album.images[0].url" />
+          </div>
+          <div class="col flex-column d-flex justify-content-start">
+            <div class="col">
+              <div class="artist-name align-items-center">
+                <p>{{ ApiOneSong.name }}</p>
+              </div>
+             <a [href]="'/artist/'+ApiOneSong.artists[0].id"> <p>{{ ApiOneSong.artists[0].name }}</p></a>
+            </div>
+            <div class="tags">
+              <p *ngFor="let genre of ApiArtists.genres"># {{ genre }}</p>
+            </div>
+            <div class="artist-name align-items-center mt-3">
+              <audio controls [src]="ApiOneSong.preview_url"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="artist-songs my-4">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="my-4">
+            <p style="font-weight: 800; font-size: 40px">Текст пісні</p>
+            <div *ngFor="let lyric of lyrics" class="col-12 song-item d-flex align-items-center p-2">
+                <ng-container *ngIf="lyric.id == ApiOneSong.id">
+                  <pre>{{lyric.text}}</pre>
+                </ng-container>
+              </div>
+      </div>
+    </div>
+    <div class="col">
+        <div class="my-4">
+            <p style="font-weight: 800; font-size: 40px">Кліп пісні</p>
+            <div *ngFor="let lyric of lyrics" class="col-12 song-item d-flex align-items-center p-2">
+                <ng-container *ngIf="lyric.id == ApiOneSong.id">
+                    <video controls style="width: 600px">
+                        <source [src]="'../../assets/video/' + lyric.clip">
+                    </video>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    
+    
+  </div>
+</div>
+<div class="footer-box">
+    <div class="container">
+      <div
+        class="row d-flex justify-content-center text-center py-4 align-items-start"
+      >
+        <div class="col d-flex justify-content-center flex-column">
+          <h5><b>КОМПАНІЯ</b></h5>
+          <p>Про нас</p>
+          <p>Вакансії</p>
+        </div>
+        <div class="col d-flex justify-content-center flex-column">
+          <h5><b>СПІЛЬНОТИ</b></h5>
+          <p>Для виконавців</p>
+          <p>Для розробників</p>
+          <p>Для рекламодавців</p>
+          <p>Для інвесторів</p>
+          <p>Для постачальників</p>
+        </div>
+        <div class="col d-flex justify-content-center flex-column">
+          <h5><b>КОРИСНІ ПОСИЛАННЯ</b></h5>
+          <p>Підтримка</p>
+          <p>Вебпрогравач</p>
+        </div>
+      </div>
+      <div
+        class="row d-flex justify-content-between text-center my-4 py-4 align-items-start"
+      >
+        <div class="col d-flex text-center justify-content-center flex-row">
+          <p>Юридична інформація</p>
+        </div>
+        <div class="col d-flex text-center justify-content-center flex-row">
+          <p>Центр конфіденційності</p>
+        </div>
+        <div class="col d-flex text-center justify-content-center flex-row">
+          <p>Політика конфіденційності</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

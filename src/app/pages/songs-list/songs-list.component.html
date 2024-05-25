@@ -1,30 +1,30 @@
 <div class="header-box">
-  <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col d-flex align-items-center justify-content-between">
-       <a href="/">  <img style="height: 45px;" src="../../../assets/images/Group 57.png" alt="" /></a> 
-        <a href="/artists"><p>Виконавці</p></a>
-        <a href="/songs"><p>Пісні</p></a>
-        <div class="input-search input-search-navbar mx-2">
-          <input
-            placeholder="Пошук"
-            type="text"
-          />
-          <button type="submit" class="searchButton">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col d-flex align-items-center justify-content-between">
+         <a href="/">  <img style="height: 45px;" src="../../../assets/images/Group 57.png" alt="" /></a> 
+          <a href="/artists"><p>Виконавці</p></a>
+          <a href="/songs"><p>Пісні</p></a>
+          <div class="input-search input-search-navbar mx-2">
+            <input
+              placeholder="Пошук"
+              type="text"
+            />
+            <button type="submit" class="searchButton">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+          <div class="btn-login  my-2">Увійти</div>
         </div>
-        <div class="btn-login  my-2">Увійти</div>
       </div>
     </div>
   </div>
-</div>
 
 <div class="container">
   <div class="row d-flex justify-content-center my-2">
     <div class="col d-flex justify-content-center my-2">
       <h5>
-        <b>Виконавці</b>
+        <b>Пісні</b>
       </h5>
     </div>
     <div class="row d-flex justify-content-center my-2">
@@ -41,24 +41,31 @@
       </div>
     </div>
   </div>
-  <div class="row d-flex justify-content-center my-2">
-    <div *ngFor="let artist of ApiArtists"
-      class="card card-tom m-3 col-12 col-xl-12 col"
-      style="width: 200px"
-    >
-      <img
-        class="card-img-top"
-        style="height: 200px; width: 200px"
-        [src]="artist.images[0].url"
-      />
-      <div class="card-body">
-       <a [href]="'/artist/'+artist.id" ><p class="card-text"><b> {{artist.name}}</b></p></a> 
-        <p class="card-text">Toп  {{artist.popularity}}</p>
+  <div class="row d-flex justify-content-center my-2 align-items-center">
+    <div *ngFor="let artistSongs of ApiSongs" class="col-12">
+      <div class="row d-flex justify-content-center">
+        <div
+          *ngFor="let song of artistSongs"
+          class="card card-tom m-3 col-12 col-xl-2 col"
+          style="width: 200px"
+        >
+          <img
+            class="card-img-top"
+            style="height: 200px; width: 200px"
+            [src]="song.album.images[0].url"
+          />
+          <div class="card-body">
+            <a [href]="'/song/'+song.id"
+              ><p class="card-text">
+                <b>{{ song.name }}</b>
+              </p></a
+            >
+            <a [href]="'/artist/'+song.album.artists[0].id"><p class="card-text">{{ song.album.artists[0].name }}</p></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
-  
 </div>
 
 <div class="footer-box">
